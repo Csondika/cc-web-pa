@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<script src="~/js/site.js"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet" />
+<div class="jumbotron jumbotron-fluid vertical-center text-light" id="home">
+    <div class="container">
+        <h1 class="display-3">Welcome to HealthBar.</h1>
+        <p class="lead">We will help to keep you, your wallet and your healthbar full!</p>
+        <hr class="my-4">
+        <form class="form-inline justify-content-center">
+            @if (Context.User.Identity.IsAuthenticated)
+            {
+                <a class="btn btn-dark my-2 my-sm-0 m-2" onclick="GetSchedules()" ;>Go to My Schedule</a>
+                <a asp-controller="Account" asp-action="LogOut" class="btn btn-danger my-2 my-sm-0 m-2">Log Out</a>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login" class="btn btn-success my-2 my-sm-0">Get Started</a>
+            }
+        </form>
+    </div>
+</div>
+
+
+
