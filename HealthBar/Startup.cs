@@ -62,7 +62,7 @@ namespace Schedule_master_2000
         }
         private string InitConnectionString()
         {
-            string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING") ?? "Host=localhost;Username=postgres;Password=admin;Database=schedulemaster";
+            string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING") ?? "Host=localhost;Username=postgres;Password=admin;Database=healthbar";
             return connectionString;
         }
         public IConfiguration Configuration { get; }
