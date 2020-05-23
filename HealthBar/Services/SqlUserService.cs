@@ -10,15 +10,18 @@ namespace Schedule_master_2000.Services
 {
     public class SqlUserService: SqlBaseService, IUserService
     {
-        private static User ToUser(IDataReader reader)
+        private static User ToExistingUser(IDataReader reader)
         {
             return new User
             (
-               (string)reader["username"],
-               (string)reader["user_password"],
+               (int)reader["id"],
+               (string)reader["name"],
+               (string)reader["password"],
                (string)reader["email"],
-               (string)reader["user_role"],
-               (int)reader["userid"]
+               (string)reader["role"],
+               (string)reader["city"],
+               (string)reader["address"],
+               (int)reader["postal_code"]
             );
         }
 
@@ -40,8 +43,9 @@ namespace Schedule_master_2000.Services
             command.Parameters.Add(param);
             using var reader = command.ExecuteReader();
             reader.Read();
-            return ToUser(reader);
+            return ToExistingUser(reader);
         }
+
         public User GetOne(string email)
         {
             using var command = _connection.CreateCommand();
@@ -49,21 +53,7 @@ namespace Schedule_master_2000.Services
 
             using var reader = command.ExecuteReader();
             reader.Read();
-            return ToUser(reader);
-        }
-
-        public List<User> GetAll()
-        {
-            using var command = _connection.CreateCommand();
-            command.CommandText = "SELECT * FROM users";
-
-            using var reader = command.ExecuteReader();
-            List<User> users = new List<User>();
-            while (reader.Read())
-            {
-                users.Add(ToUser(reader));
-            }
-            return users;
+            return ToExistingUser(reader);
         }
 
         public void DeleteUser(int id)
@@ -96,7 +86,7 @@ namespace Schedule_master_2000.Services
             using var reader = command.ExecuteReader();
             if (reader.Read())
             {
-                return ToUser(reader);
+                return ToExistingUser(reader);
             }
             return null;
         }
@@ -138,6 +128,13 @@ namespace Schedule_master_2000.Services
             bool UserExist = Convert.ToBoolean(command.ExecuteScalar());
 
             return UserExist;
+        }
+
+        public bool CheckIfUserHasAddress(string email)
+        {
+            User userToCheck = GetOne(email);
+
+            return userToCheck.City != null && userToCheck.Address != null && userToCheck.PostalCode != null;
         }
     }
 }

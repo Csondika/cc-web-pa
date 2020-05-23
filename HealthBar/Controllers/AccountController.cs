@@ -42,7 +42,7 @@ namespace Schedule_master_2000.Controllers
 
             _userService.InsertUser(model.Username, Utility.Hash(model.Password), model.Email);
 
-            return View("Login", "Account");
+            return RedirectToAction("Login");
         }
 
         [HttpGet]
