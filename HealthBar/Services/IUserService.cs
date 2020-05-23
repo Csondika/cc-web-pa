@@ -11,6 +11,7 @@ namespace Schedule_master_2000.Services
         User GetOne(int userid);
         User GetOne(string email);
         List<User> GetAll();
+        void InsertUser(string userName, string password, string email, string role = "user");
         void DeleteUser(int id);
         bool CheckIfUserExists(string email);
     }

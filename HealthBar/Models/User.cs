@@ -16,18 +16,15 @@ namespace Schedule_master_2000.Models
         public string Role { get; set; }
 
        
-        public User(int id, string username, string password, string email, string role)
+        public User(string username, string password, string email, string role = "user", int? id = null)
         {
-            ID = id;
+            ID = id ?? default;
             Username = username;
             Password = password;
             Email = email;
             Role = role;
         }
-        public User()
-        {
 
-        }
-
+        public User() { }
     }
 }

@@ -14,12 +14,11 @@ namespace Schedule_master_2000.Services
         {
             return new User
             (
-               (int)reader["userid"],
                (string)reader["username"],
                (string)reader["user_password"],
                (string)reader["email"],
-               (string)reader["user_role"]
-
+               (string)reader["user_role"],
+               (int)reader["userid"]
             );
         }
 
@@ -33,10 +32,10 @@ namespace Schedule_master_2000.Services
         public User GetOne(int userid)
         {
             using var command = _connection.CreateCommand();
-            command.CommandText = "SELECT * FROM users WHERE userid = @userid";
+            command.CommandText = "SELECT * FROM users WHERE userid = @id";
 
             var param = command.CreateParameter();
-            param.ParameterName = "userid";
+            param.ParameterName = "id";
             param.Value = userid;
             command.Parameters.Add(param);
             using var reader = command.ExecuteReader();
@@ -70,10 +69,10 @@ namespace Schedule_master_2000.Services
         public void DeleteUser(int id)
         {
             using var command = _connection.CreateCommand();
-            command.CommandText = "Delete * From users Where userid = @userid";
+            command.CommandText = "Delete * From users Where id = @id";
 
             var param = command.CreateParameter();
-            param.ParameterName = "userid";
+            param.ParameterName = "id";
             param.Value = id;
             command.Parameters.Add(param);
             using var reader = command.ExecuteReader();
@@ -84,13 +83,13 @@ namespace Schedule_master_2000.Services
             using var command = _connection.CreateCommand();
 
             var usernameParam = command.CreateParameter();
-            usernameParam.ParameterName = "username";
+            usernameParam.ParameterName = "name";
             usernameParam.Value = username;
 
             var passwordParam = command.CreateParameter();
             passwordParam.ParameterName = "password";
             passwordParam.Value = password;
-            command.CommandText = $"SELECT * FROM users WHERE username = @username AND user_password = @password";
+            command.CommandText = $"SELECT * FROM users WHERE name = @name AND password = @password";
             command.Parameters.Add(usernameParam);
             command.Parameters.Add(passwordParam);
 
@@ -102,12 +101,12 @@ namespace Schedule_master_2000.Services
             return null;
         }
 
-        public void Register(string userName, string password, string email, string role)
+        public void InsertUser(string userName, string password, string email, string role)
         {
             using var command = _connection.CreateCommand();
 
             var userNameParam = command.CreateParameter();
-            userNameParam.ParameterName = "username";
+            userNameParam.ParameterName = "name";
             userNameParam.Value = userName;
             var passwordParam = command.CreateParameter();
             passwordParam.ParameterName = "password";
@@ -119,7 +118,7 @@ namespace Schedule_master_2000.Services
             roleParam.ParameterName = "role";
             roleParam.Value = role;
 
-            command.CommandText = $"INSERT INTO users(username,user_password,email,user_role) VALUES (@username, @password, @email, @role)";
+            command.CommandText = $"INSERT INTO users(name, password, email, role) VALUES (@name, @password, @email, @role)";
             command.Parameters.Add(userNameParam);
             command.Parameters.Add(passwordParam);
             command.Parameters.Add(emailParam);

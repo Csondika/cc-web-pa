@@ -35,25 +35,14 @@ namespace Schedule_master_2000.Controllers
         [HttpPost]
         public IActionResult Registration(RegistrationViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                // create and add user
-                // then redirect to somewhere
-            }
-
-            return View();
-        }
-
-        public IActionResult RegistrationComplete(RegistrationViewModel model)
-        {
             if (!Utility.IsValidEmail(model.Email))
             {
                 return RedirectToAction("Registration", "Account");
             }
 
-            //_loader.InsertUser(model.Username, model.Email, Utility.Hash(model.Password));
+            _userService.InsertUser(model.Username, Utility.Hash(model.Password), model.Email);
 
-            return View();
+            return View("Login", "Account");
         }
 
         [HttpGet]
