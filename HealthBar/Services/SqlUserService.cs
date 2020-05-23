@@ -1,4 +1,5 @@
 ﻿using Npgsql;
+using Schedule_master_2000.Domain;
 using Schedule_master_2000.Models;
 using System;
 using System.Collections.Generic;
@@ -68,27 +69,29 @@ namespace Schedule_master_2000.Services
             using var reader = command.ExecuteReader();
         }
 
-        public User Login(string username, string password)
+        public bool ValidateUser(string email, string password)
         {
             using var command = _connection.CreateCommand();
 
-            var usernameParam = command.CreateParameter();
-            usernameParam.ParameterName = "name";
-            usernameParam.Value = username;
+            var emailParam = command.CreateParameter();
+            emailParam.ParameterName = "email";
+            emailParam.Value = email;
 
             var passwordParam = command.CreateParameter();
             passwordParam.ParameterName = "password";
-            passwordParam.Value = password;
-            command.CommandText = $"SELECT * FROM users WHERE name = @name AND password = @password";
-            command.Parameters.Add(usernameParam);
+            passwordParam.Value = Utility.Hash(password);
+            command.CommandText = $"SELECT * FROM users WHERE email = @email AND password = @password";
+            command.Parameters.Add(emailParam);
             command.Parameters.Add(passwordParam);
 
             using var reader = command.ExecuteReader();
+            
             if (reader.Read())
             {
-                return ToExistingUser(reader);
+                return true;
             }
-            return null;
+
+            return false;
         }
 
         public void InsertUser(string userName, string password, string email, string role)
@@ -115,7 +118,6 @@ namespace Schedule_master_2000.Services
             command.Parameters.Add(roleParam);
 
             HandleExecuteNonQuery(command);
-
         }
 
         public bool CheckIfUserExists(string email)

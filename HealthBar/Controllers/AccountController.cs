@@ -61,7 +61,7 @@ namespace Schedule_master_2000.Controllers
         [HttpPost]
         public async Task<ActionResult> LoginAsync(LoginViewModel model)
         {
-            if (_userService.CheckIfUserExists(model.Email))
+            if (_userService.ValidateUser(model.Email, model.Password))
             {
                 var claims = new List<Claim> { new Claim(ClaimTypes.Email, model.Email) };
 
@@ -101,13 +101,9 @@ namespace Schedule_master_2000.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Account", "failure");
+                ModelState.AddModelError(string.Empty, "Incorrect E-mail and/or Password. Please try again.");
+                return View("Login", model);
             }
-        }
-
-        public IActionResult LoginFailed()
-        {
-            return View();
         }
     }
 }
