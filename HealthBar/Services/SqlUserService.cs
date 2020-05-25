@@ -185,7 +185,7 @@ namespace HealthBar.Services
                 passwordParam.ParameterName = "password";
                 passwordParam.Value = Utility.Hash(password);
 
-                command.CommandText = $"UPDATE users SET name = @name, password = @password, email = @email, postal_code = @postal_code, city = @city, address = @address WHERE id LIKE @id";
+                command.CommandText = $"UPDATE users SET name = @name, password = @password, email = @email, postal_code = @postal_code, city = @city, address = @address WHERE id = @id";
                 command.Parameters.Add(idParam);
                 command.Parameters.Add(usernameParam);
                 command.Parameters.Add(passwordParam);
