@@ -13,17 +13,25 @@ namespace HealthBar.Services
     {
         private static User ToExistingUser(IDataReader reader)
         {
-            return new User
+            User user = new User
             (
                (int)reader["id"],
                (string)reader["name"],
                (string)reader["password"],
                (string)reader["email"],
-               (string)reader["role"],
-               (string)reader["city"],
-               (string)reader["address"],
-               (int)reader["postal_code"]
+               (string)reader["role"]
             );
+
+            if (reader["postal_code"] != DBNull.Value)
+                user.PostalCode = (int)reader["postal_code"];
+
+            if (reader["city"] != DBNull.Value)
+                user.City = (string)reader["city"];
+
+            if (reader["address"] != DBNull.Value)
+                user.Address = (string)reader["address"];
+
+            return user;
         }
 
         private readonly IDbConnection _connection;

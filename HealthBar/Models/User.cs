@@ -14,9 +14,9 @@ namespace HealthBar.Models
         public string Email { get; private set; }
 
         public string Role { get; private set; }
-        public string City { get; private set; }
-        public string Address { get; private set; }
-        public int? PostalCode { get; private set; }
+        public string City { get; set; }
+        public string Address { get; set; }
+        public int? PostalCode { get; set; }
 
         // User for registration
         public User(string username, string password, string email, string role = "user", int? id = null)
@@ -30,7 +30,7 @@ namespace HealthBar.Models
 
         // User for existing DB queries
         public User(int id, string username, string password, string email, string role,
-            string city, string address, int postalCode)
+            string city=null, string address=null, int? postalCode=null)
         {
             ID = id;
             Username = username;
