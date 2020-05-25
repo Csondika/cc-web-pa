@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Schedule_master_2000.ViewModels
+namespace HealthBar.ViewModels
 {
     public class LoginViewModel
     {

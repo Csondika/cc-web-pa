@@ -1,13 +1,13 @@
 ﻿using Npgsql;
-using Schedule_master_2000.Domain;
-using Schedule_master_2000.Models;
+using HealthBar.Domain;
+using HealthBar.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Schedule_master_2000.Services
+namespace HealthBar.Services
 {
     public class SqlUserService: SqlBaseService, IUserService
     {
@@ -103,7 +103,7 @@ namespace Schedule_master_2000.Services
             userNameParam.Value = userName;
             var passwordParam = command.CreateParameter();
             passwordParam.ParameterName = "password";
-            passwordParam.Value = password;
+            passwordParam.Value = Utility.Hash(password);
             var emailParam = command.CreateParameter();
             emailParam.ParameterName = "email";
             emailParam.Value = email;
@@ -123,7 +123,7 @@ namespace Schedule_master_2000.Services
         public bool CheckIfUserExists(string email)
         {
             using var command = _connection.CreateCommand();
-            command.CommandText = $"SELECT true FROM users WHERE email = '{email}'";
+            command.CommandText = $"SELECT true FROM users WHERE email = @email";
             var param = command.CreateParameter();
             param.ParameterName = "email";
             param.Value = email;
@@ -137,6 +137,57 @@ namespace Schedule_master_2000.Services
             User userToCheck = GetOne(email);
 
             return userToCheck.City != null && userToCheck.Address != null && userToCheck.PostalCode != null;
+        }
+
+        public void UpdateUser(int id, string username, string password, string email, int postalCode, string city, string address)
+        {
+            using var command = _connection.CreateCommand();
+            var idParam = command.CreateParameter();
+            idParam.ParameterName = "id";
+            idParam.Value = id;
+            var usernameParam = command.CreateParameter();
+            usernameParam.ParameterName = "name";
+            usernameParam.Value = username;
+            var emailParam = command.CreateParameter();
+            emailParam.ParameterName = "email";
+            emailParam.Value = email;
+            var postalCodeParam = command.CreateParameter();
+            postalCodeParam.ParameterName = "postal_code";
+            postalCodeParam.Value = postalCode;
+            var cityParam = command.CreateParameter();
+            cityParam.ParameterName = "city";
+            cityParam.Value = city;
+            var addressParam = command.CreateParameter();
+            addressParam.ParameterName = "address";
+            addressParam.Value = address;
+
+            if (password == null)
+            {
+                command.CommandText = $"UPDATE users SET name = @name, email = @email, postal_code = @postal_code, city = @city, address = @address WHERE id = @id";
+                command.Parameters.Add(idParam);
+                command.Parameters.Add(usernameParam);
+                command.Parameters.Add(emailParam);
+                command.Parameters.Add(postalCodeParam);
+                command.Parameters.Add(cityParam);
+                command.Parameters.Add(addressParam);
+            }
+            else
+            {
+                var passwordParam = command.CreateParameter();
+                passwordParam.ParameterName = "password";
+                passwordParam.Value = Utility.Hash(password);
+
+                command.CommandText = $"UPDATE users SET name = @name, password = @password, email = @email, postal_code = @postal_code, city = @city, address = @address WHERE id LIKE @id";
+                command.Parameters.Add(idParam);
+                command.Parameters.Add(usernameParam);
+                command.Parameters.Add(passwordParam);
+                command.Parameters.Add(emailParam);
+                command.Parameters.Add(postalCodeParam);
+                command.Parameters.Add(cityParam);
+                command.Parameters.Add(addressParam);
+            }
+
+            HandleExecuteNonQuery(command);
         }
     }
 }

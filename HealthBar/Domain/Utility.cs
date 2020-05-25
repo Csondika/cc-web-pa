@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Schedule_master_2000.Domain
+namespace HealthBar.Domain
 {
     public class Utility
     {

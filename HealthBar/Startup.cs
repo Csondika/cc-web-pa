@@ -14,9 +14,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
 using Npgsql.Logging;
-using Schedule_master_2000.Services;
+using HealthBar.Services;
 
-namespace Schedule_master_2000
+namespace HealthBar
 {
     public class Startup
     {

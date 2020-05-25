@@ -39,6 +39,6 @@ CREATE TABLE menus_ingredients(
     PRIMARY KEY(menu_id, ingredient_id)
 );
 
-INSERT INTO users(name, password, email, role) VALUES ('homeless', '982d9e3eb996f559e633f4d194def3761d909f5a3b647d1a851fead67c32c9d1', 'homeless@mail.com', 'user');
-INSERT INTO users(name, password, email, role, city, address, postal_code) VALUES ('test', '982d9e3eb996f559e633f4d194def3761d909f5a3b647d1a851fead67c32c9d1', 'test@mail.com', 'user', 'Kazincbarcika', 'Mátyás Király u. 11', 3700);
-INSERT INTO users(name, password, email, role) VALUES ('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin@mail.com', 'admin');
+INSERT INTO users(name, password, email, role) VALUES ('homeless', '5fd924625f6ab16a19cc9807c7c506ae1813490e4ba675f843d5a10e0baacdb8', 'homeless@mail.com', 'user');
+INSERT INTO users(name, password, email, role, city, address, postal_code) VALUES ('test', '5fd924625f6ab16a19cc9807c7c506ae1813490e4ba675f843d5a10e0baacdb8', 'test@mail.com', 'user', 'Kazincbarcika', 'Mátyás Király u. 11', 3700);
+INSERT INTO users(name, password, email, role) VALUES ('admin', '5fd924625f6ab16a19cc9807c7c506ae1813490e4ba675f843d5a10e0baacdb8', 'admin@mail.com', 'admin');

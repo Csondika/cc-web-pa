@@ -1,6 +1,6 @@
 using System;
 
-namespace Schedule_master_2000.Models
+namespace HealthBar.Models
 {
     public class ErrorViewModel
     {

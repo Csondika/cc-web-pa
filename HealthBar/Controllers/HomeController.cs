@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Schedule_master_2000.Models;
-using Schedule_master_2000.Services;
+using HealthBar.Models;
+using HealthBar.Services;
 
-namespace Schedule_master_2000.Controllers
+namespace HealthBar.Controllers
 {
     public class HomeController : Controller
     {
