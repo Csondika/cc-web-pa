@@ -136,6 +136,13 @@ namespace HealthBar.Controllers
         {
             _userService.UpdateUser(id, username, password, email, postalCode, city, address);
 
+            return RedirectToAction("LogOutAndPromoteLogin", "Account");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> LogOutAndPromoteLoginAsync()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
         }
     }
