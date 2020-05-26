@@ -1,8 +1,29 @@
-﻿
+﻿@model List<Menu>
 @{
     ViewData["Title"] = "Choose from our pre-made Menus";
 }
 
     <div class="container mb-3 mt-3">
         <h1>Pre-made Menus</h1>
+    </div>
+
+    <div class="container" id="menu">
+        @foreach (Menu menu in Model)
+        {
+            <span class="row">Menu Id: @menu.Id</span>
+            <span class="row">Menu Name: @menu.Name</span>
+            <span class="row">Price Off: @menu.PriceOff %</span>
+            <span class="row">User Id: @menu.UserId</span>
+            <span class="row">Calories: @menu.Calories kcal</span>
+            <span class="row">Price: @menu.Price Ft</span>
+            @if (menu.IsVegan)
+            {
+                <span class="row">Vegan: Yes</span>
+            }
+            else
+            {
+                <span class="row">Vegan: No</span>
+            }
+            <hr />
+        }
     </div>

@@ -81,6 +81,7 @@ namespace HealthBar
                 });
             services.AddScoped<CustomCookieAuthenticationEvents>();
             services.AddScoped<IUserService, SqlUserService>();
+            services.AddScoped<IMenuService, SqlMenuService>();
             services.AddScoped<IDbConnection>(_ =>
             {
                 var connection = new NpgsqlConnection(connectionString);
