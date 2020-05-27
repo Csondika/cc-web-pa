@@ -46,45 +46,45 @@ namespace HealthBar.Services
             return menuList;
         }
 
-        public void SetMenuAttributes(Menu menu)
-        {
-            float calories = 0;
-            float price = 0;
-            List<bool> isVegan = new List<bool>();
+        //public void SetMenuAttributes(Menu menu)
+        //{
+        //    float calories = 0;
+        //    float price = 0;
+        //    List<bool> isVegan = new List<bool>();
 
-            using var command = _connection.CreateCommand();
-            var idParam = command.CreateParameter();
-            idParam.ParameterName = "menuId";
-            idParam.Value = menu.Id;
+        //    using var command = _connection.CreateCommand();
+        //    var idParam = command.CreateParameter();
+        //    idParam.ParameterName = "menuId";
+        //    idParam.Value = menu.Id;
 
-            command.CommandText = "SELECT i.calories, i.unit, i.price, i.is_vegan FROM menus m " +
-                                  "JOIN menus_ingredients mi ON m.id = mi.menu_id " +
-                                  "JOIN ingredients i ON mi.ingredient_id = i.id " +
-                                  "WHERE m.id = @menuId;";
-            command.Parameters.Add(idParam);
+        //    command.CommandText = "SELECT i.calories, i.unit, i.price, i.is_vegan FROM menus m " +
+        //                          "JOIN menus_ingredients mi ON m.id = mi.menu_id " +
+        //                          "JOIN ingredients i ON mi.ingredient_id = i.id " +
+        //                          "WHERE m.id = @menuId;";
+        //    command.Parameters.Add(idParam);
 
-            using var reader = command.ExecuteReader();
+        //    using var reader = command.ExecuteReader();
 
-            while (reader.Read())
-            {
-                calories += (float)reader[0] * ((float)reader[1] / 100f);
-                price += (float)reader[2];
-                isVegan.Add((bool)reader[3]);
-            }
+        //    while (reader.Read())
+        //    {
+        //        calories += (float)reader[0] * ((float)reader[1] / 100f);
+        //        price += (float)reader[2];
+        //        isVegan.Add((bool)reader[3]);
+        //    }
 
-            menu.Calories = (int)calories;
-            float calc = price * ((100 - menu.PriceOff) / 100f);
-            menu.Price = (int)calc;
+        //    menu.Calories = (int)calories;
+        //    float calc = price * ((100 - menu.PriceOff) / 100f);
+        //    menu.Price = (int)calc;
             
-            if (isVegan.Any(b => b == false))
-            {
-                menu.IsVegan = false;
-            }
-            else
-            {
-                menu.IsVegan = true;
-            }
-        }
+        //    if (isVegan.Any(b => b == false))
+        //    {
+        //        menu.IsVegan = false;
+        //    }
+        //    else
+        //    {
+        //        menu.IsVegan = true;
+        //    }
+        //}
     }
 }
 

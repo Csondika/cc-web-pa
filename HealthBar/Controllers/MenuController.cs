@@ -19,16 +19,32 @@ namespace HealthBar.Controllers
             _menuService = menuService;
         }
 
+        public IActionResult Menu()
+        {
+            return View("MenuList");
+        }
+
         public IActionResult MenuList()
         {
             List<Menu> menuListModel = _menuService.GetAll();
 
-            foreach (Menu menu in menuListModel)
-            {
-                _menuService.SetMenuAttributes(menu);
-            }
-
-            return View(menuListModel);
+            return Json(menuListModel);
         }
+
+        //public IActionResult SortedMenuList(bool isSlim = false, bool isCheap = false, bool isVegan = false)
+        //{
+        //    List<Menu> menuListModel = _menuService.GetAll();
+        //    List<Menu> sortedMenuListModel = new List<Menu>();
+
+        //    foreach (Menu menu in menuListModel)
+        //    {
+        //        _menuService.SetMenuAttributes(menu);
+        //    }
+
+
+
+
+        //    return Json(menuListModel);
+        //}
     }
 }

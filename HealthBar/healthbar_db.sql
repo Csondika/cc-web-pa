@@ -33,6 +33,9 @@ CREATE TABLE menus(
     id SERIAL PRIMARY KEY,
     name VARCHAR(50)  NOT NULL,
     price_off INT NOT NULL,
+	price INT NOT NULL,
+	calories INT NOT NULL,
+	is_vegan BOOL NOT NULL,
     user_id INT REFERENCES users(id)
 );
 
@@ -68,10 +71,10 @@ INSERT INTO ingredients(name, type, calories, unit, price, is_vegan) VALUES ('Sw
 INSERT INTO ingredients(name, type, calories, unit, price, is_vegan) VALUES ('Caesar Salad', 'side_dish', 120, 100, 300,'true');
 INSERT INTO ingredients(name, type, calories, unit, price, is_vegan) VALUES ('Chicken Salad', 'side_dish', 170, 100, 420,'false');
 
-INSERT INTO menus (name, price_off, user_id) VALUES ('The Happy Vegan', 20, 1);
-INSERT INTO menus (name, price_off, user_id) VALUES ('Beefy American', 20, 1);
-INSERT INTO menus (name, price_off, user_id) VALUES ('Eggcelent Breakfast', 20, 1);
-INSERT INTO menus (name, price_off, user_id) VALUES ('The Healthy Chicken', 20, 1);
+INSERT INTO menus (name, price_off, price, calories, is_vegan, user_id) VALUES ('The Happy Vegan', 20, 832, 627, true, 1);
+INSERT INTO menus (name, price_off, price, calories, is_vegan, user_id) VALUES ('Beefy American', 20, 1168, 1895, false, 1);
+INSERT INTO menus (name, price_off, price, calories, is_vegan, user_id) VALUES ('Eggcelent Breakfast', 20, 904, 824, false, 1);
+INSERT INTO menus (name, price_off, price, calories, is_vegan, user_id) VALUES ('The Healthy Chicken', 20, 1064, 1529, false, 1);
 
 -- The Happy Vegan
 INSERT INTO menus_ingredients(menu_id, ingredient_id, quantity) VALUES (1, 3, 1);
