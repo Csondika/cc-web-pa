@@ -5,6 +5,27 @@
 
     <script src="~/js/Menu.js"></script>
 
-    <div class="container" id="menuList">
+    <div class="container ">
+        <div class="form-group mt-5">
+            <div class="form-check form-check-inline text-light">
+                <a onclick="SortMenuList()" class="btn btn-success">Filter</a>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input ml-3" type="checkbox" id="inlineSlimCheckbox">
+                <label class="form-check-label" for="inlineSlimCheckbox">Under 1.500kcal</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input ml-3" type="checkbox" id="inlineCheapCheckbox">
+                <label class="form-check-label" for="inlineCheapCheckbox">Under 1.000Ft</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input ml-3" type="checkbox" id="inlineVeganCheckbox">
+                <label class="form-check-label" for="inlineVeganCheckbox">Only Vegan</label>
+            </div>
+
+        </div>
+        <div class="card-deck m-3" id="menuList">
+
+        </div>
         @* Dynamic DOM-building with Javascript*@
     </div>

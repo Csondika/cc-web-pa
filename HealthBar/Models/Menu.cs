@@ -15,11 +15,14 @@ namespace HealthBar.Models
         public int Price { get; set; }
         public bool IsVegan { get; set; }
 
-        public Menu(int id, string name, int priceOff, int userId)
+        public Menu(int id, string name, int priceOff, int price, int calories, bool isVegan, int userId)
         {
             Id = id;
             Name = name;
             PriceOff = priceOff;
+            Price = price;
+            Calories = calories;
+            IsVegan = isVegan;
             UserId = userId;
         }
     }

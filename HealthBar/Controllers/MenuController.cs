@@ -31,20 +31,16 @@ namespace HealthBar.Controllers
             return Json(menuListModel);
         }
 
-        //public IActionResult SortedMenuList(bool isSlim = false, bool isCheap = false, bool isVegan = false)
-        //{
-        //    List<Menu> menuListModel = _menuService.GetAll();
-        //    List<Menu> sortedMenuListModel = new List<Menu>();
+        public IActionResult SortedMenuList()
+        {
+            string checklist = Request.Form["checklist"];
+            bool isSlim = bool.Parse(checklist.Split(",")[0]);
+            bool isCheap = bool.Parse(checklist.Split(",")[1]);
+            bool isVegan = bool.Parse(checklist.Split(",")[2]);
 
-        //    foreach (Menu menu in menuListModel)
-        //    {
-        //        _menuService.SetMenuAttributes(menu);
-        //    }
+            List<Menu> menuListModel = _menuService.GetSorted(isSlim, isCheap, isVegan);
 
-
-
-
-        //    return Json(menuListModel);
-        //}
+            return Json(menuListModel);
+        }
     }
 }

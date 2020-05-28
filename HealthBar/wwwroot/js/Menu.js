@@ -1,6 +1,16 @@
-﻿let mainDivEl;
+﻿// variables to group DOM sections
+let menuListDivEl;
 let cardDeckDivEl;
+let checkboxesDivEl;
+
+// variable to parse JSON into
 let menuItems;
+
+// filter variables
+let isSlim;
+let isCheap;
+let isVegan;
+
 
 function LoadMenuList(responseText) {
     menuItems = JSON.parse(responseText);
@@ -62,17 +72,39 @@ function LoadMenuList(responseText) {
         cardDivEl.appendChild(cardHeaderDivEl);
         cardDivEl.appendChild(cardBodyDivEl);
         cardDivEl.appendChild(cardFooterDivEl);
-        cardDeckDivEl.appendChild(cardDivEl);
+        menuListDivEl.appendChild(cardDivEl);
+    }
+}
+
+function SortMenuList() {
+    const isSlimCheckboxEl = document.getElementById('inlineSlimCheckbox');
+    const isCheapCheckboxEl = document.getElementById('inlineCheapCheckbox');
+    const isVeganCheckboxEl = document.getElementById('inlineVeganCheckbox');
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/Menu/SortedMenuList', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            DropMenuList();
+            LoadMenuList(xhr.responseText);
+        }
+    }
+
+    const checklist = [isSlimCheckboxEl.checked, isCheapCheckboxEl.checked, isVeganCheckboxEl.checked]
+
+    xhr.send(`checklist=${checklist}`);
+}
+
+function DropMenuList() {
+    while (menuListDivEl.firstChild) {
+        menuListDivEl.removeChild(menuListDivEl.firstChild);
     }
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    mainDivEl = document.getElementById('menuList');
-
-    cardDeckDivEl = document.createElement('div');
-    cardDeckDivEl.className = "card-deck m-3";
-
-    mainDivEl.appendChild(cardDeckDivEl);
+    menuListDivEl = document.getElementById('menuList');
+    checkboxesDivEl = document.getElementById('checkboxesDiv');
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/Menu/MenuList', true);
@@ -82,5 +114,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             LoadMenuList(xhr.responseText);
         }
     }
+
     xhr.send();
 });

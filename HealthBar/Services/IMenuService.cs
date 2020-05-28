@@ -9,6 +9,6 @@ namespace HealthBar.Services
     public interface IMenuService
     {
         List<Menu> GetAll();
-        void SetMenuAttributes(Menu menu);
+        List<Menu> GetSorted(bool isSlim, bool isCheap, bool isVegan);
     }
 }

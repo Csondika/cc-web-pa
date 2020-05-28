@@ -18,6 +18,9 @@ namespace HealthBar.Services
                (int)reader["id"],
                (string)reader["name"],
                (int)reader["price_off"],
+               (int)reader["price"],
+               (int)reader["calories"],
+               (bool)reader["is_vegan"],
                (int)reader["user_id"]
             );
         }
@@ -46,45 +49,54 @@ namespace HealthBar.Services
             return menuList;
         }
 
-        //public void SetMenuAttributes(Menu menu)
-        //{
-        //    float calories = 0;
-        //    float price = 0;
-        //    List<bool> isVegan = new List<bool>();
+        public List<Menu> GetSorted(bool isSlim, bool isCheap, bool isVegan)
+        {
+            List<Menu> menuList = new List<Menu>();
 
-        //    using var command = _connection.CreateCommand();
-        //    var idParam = command.CreateParameter();
-        //    idParam.ParameterName = "menuId";
-        //    idParam.Value = menu.Id;
+            using var command = _connection.CreateCommand();
 
-        //    command.CommandText = "SELECT i.calories, i.unit, i.price, i.is_vegan FROM menus m " +
-        //                          "JOIN menus_ingredients mi ON m.id = mi.menu_id " +
-        //                          "JOIN ingredients i ON mi.ingredient_id = i.id " +
-        //                          "WHERE m.id = @menuId;";
-        //    command.Parameters.Add(idParam);
+            if (isSlim && isCheap && isVegan)
+            {
+                command.CommandText = "SELECT * FROM menus WHERE calories < 1500 AND price < 1000 AND is_vegan = true;";
+            }
+            else if (isSlim && isCheap)
+            {
+                command.CommandText = "SELECT * FROM menus WHERE calories < 1500 AND price < 1000;";
+            }
+            else if (isSlim && isVegan)
+            {
+                command.CommandText = "SELECT * FROM menus WHERE calories < 1500 AND is_vegan = true;";
+            }
+            else if (isCheap && isVegan)
+            {
+                command.CommandText = "SELECT * FROM menus WHERE price < 1000 AND is_vegan = true;";
+            }
+            else if (isSlim)
+            {
+                command.CommandText = "SELECT * FROM menus WHERE calories < 1500;";
+            }
+            else if (isCheap)
+            {
+                command.CommandText = "SELECT * FROM menus WHERE price < 1000;";
+            }
+            else if (isVegan)
+            {
+                command.CommandText = "SELECT * FROM menus WHERE is_vegan = true;";
+            }
+            else
+            {
+                return GetAll();
+            }
 
-        //    using var reader = command.ExecuteReader();
+            using var reader = command.ExecuteReader();
 
-        //    while (reader.Read())
-        //    {
-        //        calories += (float)reader[0] * ((float)reader[1] / 100f);
-        //        price += (float)reader[2];
-        //        isVegan.Add((bool)reader[3]);
-        //    }
+            while (reader.Read())
+            {
+                menuList.Add(ToMenu(reader));
+            }
 
-        //    menu.Calories = (int)calories;
-        //    float calc = price * ((100 - menu.PriceOff) / 100f);
-        //    menu.Price = (int)calc;
-            
-        //    if (isVegan.Any(b => b == false))
-        //    {
-        //        menu.IsVegan = false;
-        //    }
-        //    else
-        //    {
-        //        menu.IsVegan = true;
-        //    }
-        //}
+            return menuList;
+        }
     }
 }
 
