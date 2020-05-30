@@ -39,6 +39,12 @@
                                 <a class="nav-link text-light p-3" asp-controller="Account" asp-action="UserAccount">My Account</a>
                             </li>
                         }
+                        @if (Context.User.Identity.IsAuthenticated && Context.User.IsInRole("admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light p-3" asp-controller="Admin" asp-action="MenuManager">Menu Controls</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

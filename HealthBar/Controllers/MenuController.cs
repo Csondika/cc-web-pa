@@ -26,7 +26,7 @@ namespace HealthBar.Controllers
 
         public IActionResult MenuList()
         {
-            List<Menu> menuListModel = _menuService.GetAll();
+            List<Menu> menuListModel = _menuService.GetActive();
 
             return Json(menuListModel);
         }

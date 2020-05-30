@@ -21,6 +21,7 @@ namespace HealthBar.Services
                (int)reader["price"],
                (int)reader["calories"],
                (bool)reader["is_vegan"],
+               (bool)reader["is_active"],
                (int)reader["user_id"]
             );
         }
@@ -89,6 +90,23 @@ namespace HealthBar.Services
             }
 
             using var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                menuList.Add(ToMenu(reader));
+            }
+
+            return menuList;
+        }
+
+        public List<Menu> GetActive()
+        {
+            List<Menu> menuList = new List<Menu>();
+
+            using var command = _connection.CreateCommand();
+            command.CommandText = "SELECT * FROM menus WHERE is_active = true;";
+            using var reader = command.ExecuteReader();
+
 
             while (reader.Read())
             {

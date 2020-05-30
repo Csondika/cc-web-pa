@@ -14,8 +14,9 @@ namespace HealthBar.Models
         public int Calories { get; set; }
         public int Price { get; set; }
         public bool IsVegan { get; set; }
+        public bool IsActive { get; set; }
 
-        public Menu(int id, string name, int priceOff, int price, int calories, bool isVegan, int userId)
+        public Menu(int id, string name, int priceOff, int price, int calories, bool isVegan, bool isActive, int userId)
         {
             Id = id;
             Name = name;
@@ -23,6 +24,7 @@ namespace HealthBar.Models
             Price = price;
             Calories = calories;
             IsVegan = isVegan;
+            IsActive = isActive;
             UserId = userId;
         }
     }
