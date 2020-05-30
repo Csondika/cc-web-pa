@@ -15,6 +15,6 @@ namespace HealthBar.Services
         void UpdateUser(int id, string username, string password, string email, int postalCode, string city, string address);
         bool CheckIfUserExists(string email);
         bool CheckIfUserHasAddress(string email);
-        bool ValidateUser(string email, string password);
+        string ValidateUser(string email, string password);
     }
 }

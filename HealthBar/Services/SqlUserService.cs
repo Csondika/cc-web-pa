@@ -77,7 +77,7 @@ namespace HealthBar.Services
             using var reader = command.ExecuteReader();
         }
 
-        public bool ValidateUser(string email, string password)
+        public string ValidateUser(string email, string password)
         {
             using var command = _connection.CreateCommand();
 
@@ -96,10 +96,10 @@ namespace HealthBar.Services
             
             if (reader.Read())
             {
-                return true;
+                return ToExistingUser(reader).Role;
             }
 
-            return false;
+            return null;
         }
 
         public void InsertUser(string userName, string password, string email, string role)
