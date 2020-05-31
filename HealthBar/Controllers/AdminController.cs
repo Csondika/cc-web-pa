@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using HealthBar.Models;
 using HealthBar.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthBar.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private IMenuService _menuService;
