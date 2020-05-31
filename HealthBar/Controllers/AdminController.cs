@@ -31,9 +31,22 @@ namespace HealthBar.Controllers
             return Json(menuList);
         }
 
-        public void RefreshMenuActivity()
+        [HttpPost]
+        public IActionResult RefreshMenuActivity()
         {
-            
+            Dictionary<int, bool> activityDict = new Dictionary<int, bool>();
+
+            string activityString = Request.Form["activity"];
+            string[] activityArray = activityString.Split(',');
+
+            for (int i = 0; i < activityArray.Length; i+=2)
+            {
+                activityDict.Add(int.Parse(activityArray[i]), bool.Parse(activityArray[i + 1]));
+            }
+
+            _menuService.RefreshActive(activityDict);
+
+            return RedirectToAction("MenuList");
         }
     }
 }

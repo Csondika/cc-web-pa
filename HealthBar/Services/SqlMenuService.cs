@@ -115,6 +115,19 @@ namespace HealthBar.Services
 
             return menuList;
         }
+
+        public void RefreshActive(Dictionary<int, bool> activityDict)
+        {
+            using var command = _connection.CreateCommand();
+            command.CommandText = string.Empty;
+
+            foreach (KeyValuePair<int, bool> item in activityDict)
+            {
+                command.CommandText += $"UPDATE menus SET is_active = {item.Value} WHERE id = {item.Key};";
+            }
+
+            HandleExecuteNonQuery(command);
+        }
     }
 }
 
