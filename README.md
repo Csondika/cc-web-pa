@@ -7,3 +7,9 @@ Setup:
 - Root folder contains a .sql file to load test data into a PostgreSQL. Simply create and name the database "healthbar".
 - You may need to change connection string in Startup class if you host your db on another host/port.
 - Run webapp with your favourite IDE
+- Users to test the app (you can registrate your own users - except admin), both passwords are "asdasd": 
+  - test@mail.com
+  - admin@mail.com (has admin privilages)
+  
+ Admin privilage:
+ - admin can activate/deactivate menus that users can choose from (there is no cart yet, Add button has no funcionality for users)
